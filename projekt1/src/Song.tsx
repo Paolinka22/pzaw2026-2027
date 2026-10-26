@@ -8,13 +8,10 @@ export interface PropsSong{
 
 function Song({tytul, czas}:PropsSong) {
   return(
-    <div>
-      <li>
-        {tytul}: {czas}
-      </li>
-    <br />
-    </div>
-    
+        <tr>
+        <td>{tytul}</td>
+        <td className="text-end">{czas}</td>
+        </tr>
   )
 
 }
