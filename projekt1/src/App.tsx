@@ -14,6 +14,11 @@ import thriller from './assets/7.jpg'
 import darkside from './assets/8.webp'
 import miseducation from './assets/9.webp'
 
+function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const value = event.target.value;
+  console.log("Wyszukiwany: ",value);
+}
+
 const movies: PropsFilm[] = [
   {plakat: shawshank, tytul: 'Skazani na Shawshank', rok: 1994, rating: 9},
   {plakat: mila, tytul: 'Zielona mila', rok: 1999, rating: 8},
@@ -72,11 +77,31 @@ function App() {
   const [albumSongOpen, setAlbumSong] = useState(true);
   return(
     <div className="container">
+
+      <input id="movie-search" type="text" className="form-control" placeholder="Wpisz tytuł" onChange={handleChange}/>
       <h2 onClick={() => setFilm(!filmOpen)}>Filmy {filmOpen ? "▾" : "▸"}</h2>
       {filmOpen && (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
       {sortMovies.map((film) => (
           <Film {...film}/>
+      ))}
+      </div>)}
+
+      <input id="book-search" type="text" className="form-control" placeholder="Wpisz tytuł" onChange={handleChange}/>
+      <h2 onClick={()=> setBook(!bookOpen)}>Książki {bookOpen ? "▾" : "▸"}</h2>
+      {bookOpen && (
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+      {sortBooks.map((book) => (
+          <Book {...book}/>
+      ))}
+      </div>)}
+
+      <input id="album-search" type="text" className="form-control" placeholder="Wpisz tytuł" onChange={handleChange}/>
+      <h2 onClick={()=> setAlbum(!albumOpen)}>Albumy muzyczne {albumOpen ? "▾" : "▸"}</h2>
+      {albumOpen && (
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+      {sortAlbums.map((album) => (
+          <Album {...album}/>
       ))}
       </div>)}
 
@@ -88,28 +113,11 @@ function App() {
       ))}
       </div>)}
 
-
-      <h2 onClick={()=> setBook(!bookOpen)}>Książki {bookOpen ? "▾" : "▸"}</h2>
-      {bookOpen && (
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      {sortBooks.map((book) => (
-          <Book {...book}/>
-      ))}
-      </div>)}
-
       <h2 onClick={()=> setBookYear(!bookYearOpen)}>Książki posortowane według roku wydania {bookYearOpen ? "▾" : "▸"}</h2>
       {bookYearOpen && (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
       {booksYear.map((book) => (
           <Book {...book}/>
-      ))}
-      </div>)}
-
-      <h2 onClick={()=> setAlbum(!albumOpen)}>Albumy muzyczne {albumOpen ? "▾" : "▸"}</h2>
-      {albumOpen && (
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      {sortAlbums.map((album) => (
-          <Album {...album}/>
       ))}
       </div>)}
 

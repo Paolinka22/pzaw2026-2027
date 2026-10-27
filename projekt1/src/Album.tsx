@@ -14,7 +14,9 @@ export interface PropsAlbum{
   /** Lista utworów w albumie z czasem trwania utworów */
   utwory: PropsSong[];
 }
-
+function handleSongClick(tytulSong: string, tytulAlbum: string) {
+  console.log("Wybrano utwór: ",tytulSong," z ",tytulAlbum)
+}
 function Album({okladka, tytul, wykonawca, gatunek, rok, utwory}:PropsAlbum) {
   return(
     <div className="card h-100">
@@ -37,7 +39,9 @@ function Album({okladka, tytul, wykonawca, gatunek, rok, utwory}:PropsAlbum) {
             </thead>
             <tbody>
             {utwory.map((utwor, index) => (
-              <Song key={index} tytul={utwor.tytul} czas={utwor.czas} />
+              <Song key={index} tytul={utwor.tytul} czas={utwor.czas} 
+              songClick={() => handleSongClick(utwor.tytul,tytul)}
+              />
             ))}
           </tbody>
           </table>
