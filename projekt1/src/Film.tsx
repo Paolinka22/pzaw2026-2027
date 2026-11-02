@@ -15,7 +15,7 @@ function Film({plakat, tytul, rok, rating}:PropsFilm) {
     <div className="card h-100" onClick={() => {console.log("Wybrano film: ",tytul);}}>
     <img className="card-img-top" src={plakat} alt={tytul} />
     <div className="card-body">
-    {rating>=8 && <p className="card-text"><h4>Polaceny</h4></p>}
+    {rating>=8 && <div className="card-text"><h4>Polaceny</h4></div>}
     <p className="card-title">{tytul}</p>
     <p className="card-text">{rok}</p>
     <button

@@ -14,11 +14,6 @@ import thriller from './assets/7.jpg'
 import darkside from './assets/8.webp'
 import miseducation from './assets/9.webp'
 
-function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-  const value = event.target.value;
-  console.log("Wyszukiwany: ",value);
-}
-
 const movies: PropsFilm[] = [
   {plakat: shawshank, tytul: 'Skazani na Shawshank', rok: 1994, rating: 9},
   {plakat: mila, tytul: 'Zielona mila', rok: 1999, rating: 8},
@@ -75,49 +70,87 @@ function App() {
   const [bookYearOpen, setBookYear] = useState(true);
   const [albumOpen, setAlbum] = useState(true);
   const [albumSongOpen, setAlbumSong] = useState(true);
+  const [movieChange, setMovieChange] = useState("");
+  const [bookChange, setBookChange] = useState("");
+  const [albumChange, setAlbumChange] = useState("");
+  const filteredMovies = sortMovies.filter((film) => film.tytul.toLocaleLowerCase().includes(movieChange.toLocaleLowerCase()));
+  const filteredBooks = sortBooks.filter((book) => book.tytul.toLowerCase().includes(bookChange.toLowerCase()));
+  const filteredAlbums = sortAlbums.filter((album) => album.tytul.toLowerCase().includes(albumChange.toLowerCase()));
+
+function movieSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  const value = event.target.value;
+  setMovieChange(value)
+  console.log("Wyszukiwany film: ",value);
+}
+function bookSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  const value = event.target.value;
+  setBookChange(value);
+  console.log("Wyszukiwana książka: ",value);
+}
+function albumSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  const value = event.target.value;
+  setAlbumChange(value);
+  console.log("Wyszukiwany album: ",value);
+}
+
   return(
     <div className="container">
 
-      <input id="movie-search" type="text" className="form-control" placeholder="Wpisz tytuł" onChange={handleChange}/>
+      <input id="movie-search" type="text" className="form-control" placeholder="Wpisz tytuł filmu" onChange={movieSearch}/>
+      <p>Wyszukiwany film: {movieChange}</p>
       <h2 onClick={() => setFilm(!filmOpen)}>Filmy {filmOpen ? "▾" : "▸"}</h2>
       {filmOpen && (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      {sortMovies.map((film) => (
-          <Film {...film}/>
-      ))}
+      {filteredMovies.length > 0 ? (
+      filteredMovies.map((film, index) => (
+          <Film key={index} {...film}/>
+      ))) : (
+        <p>Nie znaleziono filmów</p>
+      )
+      }
       </div>)}
 
-      <input id="book-search" type="text" className="form-control" placeholder="Wpisz tytuł" onChange={handleChange}/>
+      <input id="book-search" type="text" className="form-control" placeholder="Wpisz tytuł książki" onChange={bookSearch}/>
+      <p>Wyszukiwana książka: {bookChange}</p>
       <h2 onClick={()=> setBook(!bookOpen)}>Książki {bookOpen ? "▾" : "▸"}</h2>
       {bookOpen && (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      {sortBooks.map((book) => (
-          <Book {...book}/>
-      ))}
+      {filteredBooks.length > 0 ? (
+      filteredBooks.map((book, index) => (
+          <Book key={index} {...book}/>
+      ))) : (
+        <p>Nie znaleziono filmów</p>
+      )
+      }
       </div>)}
 
-      <input id="album-search" type="text" className="form-control" placeholder="Wpisz tytuł" onChange={handleChange}/>
+      <input id="album-search" type="text" className="form-control" placeholder="Wpisz tytuł albumu" onChange={albumSearch}/>
+      <p>Wyszukiwany album: {albumChange}</p>
       <h2 onClick={()=> setAlbum(!albumOpen)}>Albumy muzyczne {albumOpen ? "▾" : "▸"}</h2>
       {albumOpen && (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      {sortAlbums.map((album) => (
-          <Album {...album}/>
-      ))}
+      {filteredAlbums.length > 0 ? (
+      filteredAlbums.map((album, index) => (
+          <Album key={index} {...album}/>
+      ))) : (
+        <p>Nie znaleziono filmów</p>
+      )
+      }
       </div>)}
 
       <h2 onClick={()=> setFilm2010(!film2010Open)}>Filmy wydane po 2010 roku {film2010Open ? "▾" : "▸"}</h2>
       {film2010Open && (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      {movies2010.map((film) => (
-          <Film {...film}/>
+      {movies2010.map((film, index) => (
+          <Film key={index} {...film}/>
       ))}
       </div>)}
 
       <h2 onClick={()=> setBookYear(!bookYearOpen)}>Książki posortowane według roku wydania {bookYearOpen ? "▾" : "▸"}</h2>
       {bookYearOpen && (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-      {booksYear.map((book) => (
-          <Book {...book}/>
+      {booksYear.map((book, index) => (
+          <Book key={index} {...book}/>
       ))}
       </div>)}
 
